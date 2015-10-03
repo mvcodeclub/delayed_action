@@ -1,0 +1,33 @@
+<%= form_for(@delayed_action_result) do |f| %>
+  <% if @delayed_action_result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@delayed_action_result.errors.count, "error") %> prohibited this delayed_action_result from being saved:</h2>
+
+      <ul>
+      <% @delayed_action_result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :result %><br>
+    <%= f.text_area :result %>
+  </div>
+  <div class="field">
+    <%= f.label :request_env %><br>
+    <%= f.text_area :request_env %>
+  </div>
+  <div class="field">
+    <%= f.label :uuid %><br>
+    <%= f.text_field :uuid %>
+  </div>
+  <div class="field">
+    <%= f.label :content_type %><br>
+    <%= f.text_field :content_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

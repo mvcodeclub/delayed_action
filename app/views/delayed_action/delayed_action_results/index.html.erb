@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Delayed Action Results</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Result</th>
+      <th>Request env</th>
+      <th>Uuid</th>
+      <th>Content type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @delayed_action_results.each do |delayed_action_result| %>
+      <tr>
+        <td><%= delayed_action_result.result %></td>
+        <td><%= delayed_action_result.request_env %></td>
+        <td><%= delayed_action_result.uuid %></td>
+        <td><%= delayed_action_result.content_type %></td>
+        <td><%= link_to 'Show', delayed_action_result %></td>
+        <td><%= link_to 'Edit', edit_delayed_action_result_path(delayed_action_result) %></td>
+        <td><%= link_to 'Destroy', delayed_action_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Delayed action result', new_delayed_action_result_path %>

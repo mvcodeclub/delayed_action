@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @delayed_action_result.result %>
+</p>
+
+<p>
+  <strong>Request env:</strong>
+  <%= @delayed_action_result.request_env %>
+</p>
+
+<p>
+  <strong>Uuid:</strong>
+  <%= @delayed_action_result.uuid %>
+</p>
+
+<p>
+  <strong>Content type:</strong>
+  <%= @delayed_action_result.content_type %>
+</p>
+
+<%= link_to 'Edit', edit_delayed_action_result_path(@delayed_action_result) %> |
+<%= link_to 'Back', delayed_action_results_path %>

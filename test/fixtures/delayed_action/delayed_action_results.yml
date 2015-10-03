@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  result: MyText
+  request_env: MyText
+  uuid: MyString
+  content_type: MyString
+
+two:
+  result: MyText
+  request_env: MyText
+  uuid: MyString
+  content_type: MyString
