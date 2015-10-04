@@ -38,7 +38,7 @@ NOTE: This will not work and cause bad things to happen if you try to use the de
 ## How to use:
 
 Add to your gemfile:
-``` gem "delayed_action", github: "mvcodeclub/delayed_action" ```
+``` gem "delayed_action" ```
 
 Install the Migration
 ``` rake delayed_action::install::migrations ```
