@@ -1,20 +1,74 @@
 # Delayed Action
+Add asynchronous queuing to your HTTP requests with one line, via a controller concern.  
 
-If you are receiving lots of timeouts in your application because your sql queries run longer than your timeout settings, this is the gem for you.
+# The code:
+```
+class ArticlesController < ApplicationController
+   include DelayedAction
+   
+   delayed_action [:show] 
+   
+   def show
+     
+   end
+end
 
-A common scenario is running your app on Heroku, you may receive RackTimeout or Heroku H13 errors. 
+```
+# Who needs this
+Many requests (reports, admin requests, data dumps,) often take longer than a typical HTTP timeout, and it is quite tedious to have to queue things up.    The code looks identical to a normal page request, the only difference is that it's expected to take a longer time to execute.  Right now, you are forced to package things up into ActiveJob or other queuing mechanisms manually, and there's lots of duplicated code.
 
-Most existing solutions encourage you to package up your request as an ActiveJob or similar, and then do a bunch of boilerplate work to unwrap things and show your request.
+It should be easy to switch between a queued request and a normal synchronous HTTP request.
 
-Rather than tediously rewriting your controller method as a background job, just add this one statement and it will get packaged up as a background job and will run when it's completed.
+Some Scenarios:
+* You are receiving lots of timeouts in your application because your  queries run longer than your timeout settings, this is the gem for you.
+* A common scenario is running your app on Heroku, you may receive RackTimeout or Heroku H13 errors. 
+* You often send these requests via email to users, even though it's awkward and non-standard.  Users are generally fine to wait 30 seconds or even a few minutes, and it's easier to just keep the tab open in your browser than to have to check your email.
 
-This could also be helpful as a way of throttling requests to your server.  For example, if you have a query that is very db intensive, you can quickly turn on or off delayed_action on those requests. You could also send them to different queues based on priority of work etc.
+Most existing solutions encourage you to package up your request as an ActiveJob or similar, and then do a bunch of boilerplate work to unwrap things and show your request.  
 
-## Status:
-- Sorta works, but no migration generator
-- Querystrings are ignored
+Rather than tediously rewriting your controller method as a background job, just add this gem and one statement and it will get packaged up as a background job and will run when it's completed.
+
+## Prerequisites
+ * Rails 4
+ * ActiveJob
+ * A queue provider, such as DelayedJob or Resque
+ 
+NOTE: This will not work and cause bad things to happen if you try to use the default inline ActiveJob provider
+
+## How to use:
+
+Add to your gemfile:
+``` gem "delayed_action", github: "mvcodeclub/delayed_action" ```
+
+Install the Migration
+``` rake delayed_action::install::migrations ```
+
+Run the migration
+``` rake db:migrate ```
+
+Add a delayed_action to your controller
+```
+class ArticlesController < ApplicationController
+   include DelayedAction
+   
+   delayed_action [:show] # the show method will be queued
+   
+   def index
+   
+   end
+   
+   def show # use this as normal
+   
+   end
+end
+
+```
+
+## Todo:
 - Better "Refresh the page" UI needed.
 - Conditional (`:if / :unless`) blocks would be nice to turn it on / off
+- Expiration of requests
+- Test under load
 
 ## Example:
 ```
@@ -40,7 +94,16 @@ It uses `app.get` to call your functions, and passes on most of the cookies and 
 # Gotchas
 Don't use ActiveJob's default (ActiveJobInline) as this will probably cause a deadlock.  Queues need to run out of process.
 
-# Milestones:
+All of your requests are stored in the DelayedActionResults table. This could get large, and there's no cleanup functionality currently.  You have to clean it up yourself
 
+You need to think about security.  
+
+# Features:
+* Works with ActiveRecord
 * Work with DelayedJob / Postgres
+* Supports Rack::Timeout
 * Work with configurable to any queue or ActiveJob
+* Works with any mime-type
+
+# How to report bugs
+Please use our github issues page to report bugs or feature requests
