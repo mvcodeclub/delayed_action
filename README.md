@@ -47,8 +47,6 @@ end
 ```
 
 ## Status:
-- Sorta works, but no migration generator
-- Querystrings are ignored
 - Better "Refresh the page" UI needed.
 - Conditional (`:if / :unless`) blocks would be nice to turn it on / off
 
@@ -77,6 +75,8 @@ It uses `app.get` to call your functions, and passes on most of the cookies and 
 Don't use ActiveJob's default (ActiveJobInline) as this will probably cause a deadlock.  Queues need to run out of process.
 
 # Milestones:
-
 * Work with DelayedJob / Postgres
 * Work with configurable to any queue or ActiveJob
+
+# How to report bugs
+Please use our github issues page to report bugs or feature requests
