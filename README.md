@@ -15,7 +15,7 @@ This could also be helpful as a way of throttling requests to your server.  For 
  * ActiveJob
  * A queue provider, such as DelayedJob or Resque
  
-*** NOTE: This will not work and cause bad things to happen if you try to use the default inline ActiveJob provider ***
+NOTE: This will not work and cause bad things to happen if you try to use the default inline ActiveJob provider
 
 ## How to use:
 
@@ -28,7 +28,23 @@ Install the Migration
 Run the migration
 ``` rake db:migrate ```
 
+Add a delayed_action to your controller
+```
+class ArticlesController < ApplicationController
+   include DelayedAction
+   
+   delayed_action [:show] # the show method will be queued
+   
+   def index
+   
+   end
+   
+   def show # use this as normal
+   
+   end
+end
 
+```
 
 ## Status:
 - Sorta works, but no migration generator
