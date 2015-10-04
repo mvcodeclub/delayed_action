@@ -12,8 +12,11 @@ class ArticlesController < ApplicationController
      
    end
 end
-
 ```
+
+# Sample Project
+https://github.com/mvcodeclub/da_test
+
 # Who needs this
 Many requests (reports, admin requests, data dumps,) often take longer than a typical HTTP timeout, and it is quite tedious to have to queue things up.    The code looks identical to a normal page request, the only difference is that it's expected to take a longer time to execute.  Right now, you are forced to package things up into ActiveJob or other queuing mechanisms manually, and there's lots of duplicated code.
 
