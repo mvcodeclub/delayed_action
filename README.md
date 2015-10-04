@@ -1,6 +1,10 @@
 # Delayed Action
+Add asynchronous queuing to your HTTP requests with one line, via a controller concern.  
 
-Delayed Action is a DRY way to add queuing to your controller.  Many requests (reports, admin request) take longer than a typical HTTP timeout, and it is quite tedious to have to queue things up.    The code looks identical to a normal page request, the only difference is that it's expected to take a longer time to execute.  It should be easy to switch between a queued request and a normal synchronous HTTP request.
+# Who needs this
+Many requests (reports, admin requests, data dumps,) often take longer than a typical HTTP timeout, and it is quite tedious to have to queue things up.    The code looks identical to a normal page request, the only difference is that it's expected to take a longer time to execute.  Right now, you are forced to package things up into ActiveJob or other queuing mechanisms manually, and there's lots of duplicated code.
+
+It should be easy to switch between a queued request and a normal synchronous HTTP request.
 
 Some Scenarios:
 * You are receiving lots of timeouts in your application because your  queries run longer than your timeout settings, this is the gem for you.
@@ -51,6 +55,7 @@ end
 - Better "Refresh the page" UI needed.
 - Conditional (`:if / :unless`) blocks would be nice to turn it on / off
 - Expiration of requests
+- Test under load
 
 ## Example:
 ```
