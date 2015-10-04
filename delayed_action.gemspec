@@ -10,14 +10,13 @@ Gem::Specification.new do |s|
   s.authors     = ["Douglas Tarr"]
   s.email       = ["douglas.tarr@gmail.com"]
   s.homepage    = "https://github.com/mvcodeclub/delayed_action"
-  s.summary     = "Summary of DelayedAction."
-  s.description = "Description of DelayedAction."
+  s.summary     = "Add asynchronous queuing of HTTP requests in one line of code"
+  s.description = "Delayed Action is a controller concern that lets you queue long running requests in a DRY fashion to avoid timeouts"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.4"
+  s.add_dependency "rails", "~> 4.2"
 
-  s.add_development_dependency "sqlite3"
 end
