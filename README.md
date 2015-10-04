@@ -10,6 +10,26 @@ Rather than tediously rewriting your controller method as a background job, just
 
 This could also be helpful as a way of throttling requests to your server.  For example, if you have a query that is very db intensive, you can quickly turn on or off delayed_action on those requests. You could also send them to different queues based on priority of work etc.
 
+## Prerequisites
+ * Rails 4
+ * ActiveJob
+ * A queue provider, such as DelayedJob or Resque
+ 
+*** NOTE: This will not work and cause bad things to happen if you try to use the default inline ActiveJob provider ***
+
+## How to use:
+
+Add to your gemfile:
+``` gem "delayed_action", github: "mvcodeclub/delayed_action" ```
+
+Install the Migration
+``` rake delayed_action::install::migrations ```
+
+Run the migration
+``` rake db:migrate ```
+
+
+
 ## Status:
 - Sorta works, but no migration generator
 - Querystrings are ignored
