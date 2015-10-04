@@ -13,7 +13,13 @@ class DelayedActionActiveJob < ActiveJob::Base
 
     env = JSON.parse(result.request_env)
     session = ActionDispatch::Integration::Session.new(Rails.application)
-    path = "#{env["PATH_INFO"]}?force=true"
+    if env["QUERY_STRING"]
+      env["QUERY_STRING"] = "force=true&#{env["QUERY_STRING"]}"
+      path = "#{env["PATH_INFO"]}?force=true&#{env["QUERY_STRING"]}"
+    else
+      path = "#{env["PATH_INFO"]}?force=true"
+    end
+    puts path
     session.get path, nil, env
     result.update(result: session.response.body, content_type: session.response.content_type)
 

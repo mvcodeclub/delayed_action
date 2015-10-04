@@ -12,7 +12,7 @@ module DelayedAction
     private
 
     def delayed_action_queue
-      params_to_copy = ["SCRIPT_NAME", "PATH_INFO", "REQUEST_METHOD", "HTTP_COOKIE", "REQUEST_URI", "SERVER_NAME", "SERVER_PORT", "REMOTE_ADDR", "SERVER_PROTOCOL", "HTTP_HOST", "HTTP_USER_AGENT" , "HTTP_VERSION", "HTTP_X_FORWARDED_PROTO"]
+      params_to_copy = ["SCRIPT_NAME", "PATH_INFO", "QUERY_STRING", "REQUEST_METHOD", "HTTP_COOKIE", "REQUEST_URI", "SERVER_NAME", "SERVER_PORT", "REMOTE_ADDR", "SERVER_PROTOCOL", "HTTP_HOST", "HTTP_USER_AGENT" , "HTTP_VERSION", "HTTP_X_FORWARDED_PROTO"]
       request_env = {}
       params_to_copy.each do |p|
         request_env[p] = request.env[p]
@@ -20,7 +20,14 @@ module DelayedAction
 
       result = DelayedAction::DelayedActionResult.create request_env: request_env.to_json
       job = DelayedActionActiveJob.perform_later result
-      redirect_to "#{request.path}?delayed_uuid=#{result.uuid}"
+      if request.fullpath.include?("?")
+        path = "#{request.fullpath}&delayed_uuid=#{result.uuid}"
+      else
+        path = "#{request.fullpath}?delayed_uuid=#{result.uuid}"
+      end
+
+      redirect_to path
+
 
     end
 
