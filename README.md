@@ -101,6 +101,8 @@ All of your requests are stored in the DelayedActionResults table. This could ge
 
 You need to think about security.  
 
+It only currently works on GET requests (not POST etc)
+
 # Features:
 * Works with ActiveRecord
 * Work with DelayedJob / Postgres
