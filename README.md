@@ -44,7 +44,7 @@ Add to your gemfile:
 ``` gem "delayed_action" ```
 
 Install the Migration
-``` rake delayed_action::install::migrations ```
+``` rake delayed_action:install:migrations ```
 
 Run the migration
 ``` rake db:migrate ```
