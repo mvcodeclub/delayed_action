@@ -90,6 +90,8 @@ end
 # How it works
 DelayedAction intercepts calls to actions you specify.  If it finds one, it queues up a request to a job which will run the action on a job queue.  It then redirects to your page, with the UUID of the result.  
 
+The request runs on the thread that services the ActiveJob queue, not the web thread.
+
 If it sees the UUID on the querystring, it loads the resulting HTML from the database.
 
 It uses `app.get` to call your functions, and passes on most of the cookies and environment variables to the request so it can be authenticated.
