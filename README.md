@@ -12,8 +12,11 @@ class ArticlesController < ApplicationController
      
    end
 end
-
 ```
+
+# Sample Project
+https://github.com/mvcodeclub/da_test
+
 # Who needs this
 Many requests (reports, admin requests, data dumps,) often take longer than a typical HTTP timeout, and it is quite tedious to have to queue things up.    The code looks identical to a normal page request, the only difference is that it's expected to take a longer time to execute.  Right now, you are forced to package things up into ActiveJob or other queuing mechanisms manually, and there's lots of duplicated code.
 
@@ -38,10 +41,10 @@ NOTE: This will not work and cause bad things to happen if you try to use the de
 ## How to use:
 
 Add to your gemfile:
-``` gem "delayed_action", github: "mvcodeclub/delayed_action" ```
+``` gem "delayed_action" ```
 
 Install the Migration
-``` rake delayed_action::install::migrations ```
+``` rake delayed_action:install:migrations ```
 
 Run the migration
 ``` rake db:migrate ```
@@ -87,6 +90,8 @@ end
 # How it works
 DelayedAction intercepts calls to actions you specify.  If it finds one, it queues up a request to a job which will run the action on a job queue.  It then redirects to your page, with the UUID of the result.  
 
+The request runs on the thread that services the ActiveJob queue, not the web thread.
+
 If it sees the UUID on the querystring, it loads the resulting HTML from the database.
 
 It uses `app.get` to call your functions, and passes on most of the cookies and environment variables to the request so it can be authenticated.
@@ -97,6 +102,8 @@ Don't use ActiveJob's default (ActiveJobInline) as this will probably cause a de
 All of your requests are stored in the DelayedActionResults table. This could get large, and there's no cleanup functionality currently.  You have to clean it up yourself
 
 You need to think about security.  
+
+It only currently works on GET requests (not POST etc)
 
 # Features:
 * Works with ActiveRecord
