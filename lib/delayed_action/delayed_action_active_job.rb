@@ -19,8 +19,7 @@ class DelayedActionActiveJob < ActiveJob::Base
     else
       path = "#{env["PATH_INFO"]}?force=true"
     end
-    puts path
-    session.get path, nil, env
+    session.get path, env: env
     result.update(result: session.response.body, content_type: session.response.content_type)
 
   end
